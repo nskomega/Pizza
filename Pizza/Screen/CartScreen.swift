@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CartScreen: View {
+
+    var viewModel: CartViewModel
+
     var body: some View {
         Text("Корзина")
     }
@@ -15,6 +18,6 @@ struct CartScreen: View {
 
 struct CartScreen_Previews: PreviewProvider {
     static var previews: some View {
-        CartScreen()
+        CartScreen(viewModel: CartViewModel())
     }
 }

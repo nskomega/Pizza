@@ -20,7 +20,7 @@ struct MainTabBarView: View {
                         Text("Каталог")
                     }
                 }
-            CartScreen()
+            CartScreen(viewModel: CartViewModel())
                 .tabItem {
                     VStack {
                         Image(systemName: "cart")
