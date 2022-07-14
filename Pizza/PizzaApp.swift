@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+let screen = UIScreen.main.bounds
+
 @main
 struct PizzaApp: App {
     var body: some Scene {
         WindowGroup {
-            AuthorizationView()
+            AuthorizationScreen()
         }
     }
 }
