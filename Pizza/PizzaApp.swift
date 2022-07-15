@@ -12,6 +12,9 @@ let screen = UIScreen.main.bounds
 
 @main
 struct PizzaApp: App {
+
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+
     var body: some Scene {
         WindowGroup {
             AuthorizationScreen()

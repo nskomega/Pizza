@@ -13,6 +13,8 @@ struct AuthorizationScreen: View {
     @State private var email = ""
     @State private var password = ""
     @State private var comfirmPassword = ""
+    @State private var isShowAlert = false
+    @State private var alertMessage = ""
 
 
     var body: some View {
@@ -53,10 +55,31 @@ struct AuthorizationScreen: View {
                         print("Авторизация")
                         isTabBarViewShow.toggle()
                     } else {
-                        self.email = ""
-                        self.password = ""
-                        self.comfirmPassword = ""
-                        self.isAuthorization.toggle()
+                        print("Регистация пользователя")
+                        guard password == self.comfirmPassword else {
+                            self.alertMessage = "Пароли не совпадают!"
+                            self.isShowAlert.toggle()
+                            return
+                        }
+                        AuthtorizationService.shared.registration(
+                            email: self.email,
+                            password: self.password,
+                            completion: { result in
+                                switch result {
+                                case .success(let user):
+                                    guard let email = user.email else { return }
+                                    self.alertMessage = "Вы зарегистрировались с email \(email)"
+                                    self.isShowAlert.toggle()
+                                    self.email = ""
+                                    self.password = ""
+                                    self.comfirmPassword = ""
+                                    self.isAuthorization.toggle()
+                                case .failure(let error):
+                                    self.alertMessage = "Ошибка регистрации \(error.localizedDescription)"
+                                    self.isShowAlert.toggle()
+                                }
+
+                        })
                     }
                 } label: {
                     Text(isAuthorization ? "Войти" : "Создать аккаунт!")
@@ -86,6 +109,14 @@ struct AuthorizationScreen: View {
             .background(Color("alphaWhite"))
             .cornerRadius(26)
             .padding(isAuthorization ? 30 : 12)
+            .alert(self.alertMessage, isPresented: $isShowAlert) {
+                Button {
+
+                } label: {
+                    Text("Хорошо")
+                }
+
+            }
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Image("background")
                 .ignoresSafeArea()
