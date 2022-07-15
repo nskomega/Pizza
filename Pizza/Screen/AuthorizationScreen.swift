@@ -52,8 +52,15 @@ struct AuthorizationScreen: View {
 
                 Button {
                     if isAuthorization {
-                        print("Авторизация")
-                        isTabBarViewShow.toggle()
+                        AuthtorizationService.shared.authorization(email: self.email, password: self.password, completion: { result in
+                            switch result {
+
+                            case .success(let user):
+                                self.isTabBarViewShow.toggle()
+                            case .failure(let error):
+                                self.alertMessage = "Ошибка авторизации \(error.localizedDescription)"
+                            }
+                        })
                     } else {
                         print("Регистация пользователя")
                         guard password == self.comfirmPassword else {
@@ -79,7 +86,7 @@ struct AuthorizationScreen: View {
                                     self.isShowAlert.toggle()
                                 }
 
-                        })
+                            })
                     }
                 } label: {
                     Text(isAuthorization ? "Войти" : "Создать аккаунт!")
@@ -121,10 +128,13 @@ struct AuthorizationScreen: View {
             .background(Image("background")
                 .ignoresSafeArea()
                 .blur(radius: isAuthorization ? 0 : 6)
-                        )
+            )
             .animation(Animation.easeInOut(duration: 0.4), value: isAuthorization)
             .fullScreenCover(isPresented: $isTabBarViewShow) {
-                MainTabBarView()
+                if let user = AuthtorizationService.shared.currentUser {
+                    let mainTabBarViewModel = MainTabBarViewModel(user: user)
+                    MainTabBarView(viewModel: mainTabBarViewModel)
+                }
             }
     }
 }

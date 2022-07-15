@@ -14,15 +14,25 @@ class AuthtorizationService {
 
     private init() { }
 
-    private let autorization = Auth.auth()
+    private let auth = Auth.auth()
 
-    private var currentUser: User? {
-        return autorization.currentUser
+    var currentUser: User? {
+        return auth.currentUser
     }
 
     func registration(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
-        autorization.createUser(withEmail: email, password: password) {
+        self.auth.createUser(withEmail: email, password: password) {
             result, error in
+            if let result = result {
+                completion(.success(result.user))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func authorization(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
+        self.auth.signIn(withEmail: email, password: password) { result, error in
             if let result = result {
                 completion(.success(result.user))
             } else if let error = error {
