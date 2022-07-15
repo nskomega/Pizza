@@ -13,6 +13,8 @@ struct ProfileScreen: View {
     @State var isQuitAlertPresented = false
     @State var isAuthorizationViewPresented = false
 
+    @StateObject var viewModel: ProfileViewModel
+
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             HStack(spacing: 18) {
@@ -38,16 +40,19 @@ struct ProfileScreen: View {
                         }
                     }
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Михаил Андреевич Данилов")
-                        .bold()
-                    Text("+7 (900) 777-77-77")
+                    TextField("Имя", text: $viewModel.profile.name)
+                        .font(.body.bold())
+                    HStack {
+                        Text("+7")
+                        TextField("Телефон", value: $viewModel.profile.phoneNumber, format: .number)
+                    }
                 }
             }
             VStack(alignment: .leading) {
                 Text("Адрес доставки:")
                     .bold()
-                Text("Россия, Новосибирская область, г. Новосибирск, ул. Ленина, д.1")
-            }
+                TextField("Адрес доставки:", text: $viewModel.profile.address)
+            }.padding(.horizontal)
             List {
                 Text("Ваши заказы будут тут!")
             }.listStyle(.plain)
@@ -68,19 +73,24 @@ struct ProfileScreen: View {
                     } label: {
                         Text("Да")
                     }
-                    .fullScreenCover(isPresented: $isAuthorizationViewPresented, onDismiss: nil) {
-                        AuthorizationScreen()
-                    }
-
-
+                }
+                .fullScreenCover(isPresented: $isAuthorizationViewPresented, onDismiss: nil) {
+                    AuthorizationScreen()
                 }
 
         }.padding()
+            .onSubmit {
+                self.viewModel.setProfile()
+            }
+            .onAppear {
+                self.viewModel.getProfile()
+            }
+
     }
 }
 
 struct ProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileScreen()
+        ProfileScreen(viewModel: ProfileViewModel(profile: CurrentUser(id: "", name: "Олег Николавич", phoneNumber: 893884274, address: "ул. Ленина д. 1")))
     }
 }
