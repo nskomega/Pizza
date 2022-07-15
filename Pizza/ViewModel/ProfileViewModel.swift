@@ -16,7 +16,7 @@ class ProfileViewModel: ObservableObject {
     }
 
     func setProfile() {
-        DatabaseService.shared.createUser(user: self.profile) { result in
+        DatabaseService.shared.setProfile(user: self.profile) { result in
             switch result {
             case .success(let user):
                 print(user.name)

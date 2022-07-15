@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A2579D022880D887005672C5 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2579D012880D886005672C5 /* PositionCell.swift */; };
+		A2636A0B2881387300FF2009 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2636A0A2881387300FF2009 /* Order.swift */; };
+		A2636A0D28813D0500FF2009 /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2636A0C28813D0500FF2009 /* OrderStatus.swift */; };
 		A26F865C287FB5E200C86C27 /* PizzaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26F865B287FB5E200C86C27 /* PizzaApp.swift */; };
 		A26F865E287FB5E200C86C27 /* AuthorizationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26F865D287FB5E200C86C27 /* AuthorizationScreen.swift */; };
 		A26F8660287FB5E700C86C27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A26F865F287FB5E700C86C27 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		A2579D012880D886005672C5 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
+		A2636A0A2881387300FF2009 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		A2636A0C28813D0500FF2009 /* OrderStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatus.swift; sourceTree = "<group>"; };
 		A26F8658287FB5E200C86C27 /* Pizza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pizza.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26F865B287FB5E200C86C27 /* PizzaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaApp.swift; sourceTree = "<group>"; };
 		A26F865D287FB5E200C86C27 /* AuthorizationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationScreen.swift; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 				A2858BB52880363D007BB921 /* Product.swift */,
 				A2858BC428805EFD007BB921 /* Position.swift */,
 				A2E967E2288103C5002B1C67 /* CurrentUser.swift */,
+				A2636A0A2881387300FF2009 /* Order.swift */,
+				A2636A0C28813D0500FF2009 /* OrderStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 			files = (
 				A2E967E5288109DA002B1C67 /* DatabaseService.swift in Sources */,
 				A2E967E7288115E7002B1C67 /* ProfileViewModel.swift in Sources */,
+				A2636A0B2881387300FF2009 /* Order.swift in Sources */,
 				A2858BC328805EC7007BB921 /* CartViewModel.swift in Sources */,
 				A2E967E1288100E2002B1C67 /* MainTabBarViewModel.swift in Sources */,
 				A26F865E287FB5E200C86C27 /* AuthorizationScreen.swift in Sources */,
@@ -261,6 +268,7 @@
 				A2858B9F287FF225007BB921 /* CartScreen.swift in Sources */,
 				A2579D022880D887005672C5 /* PositionCell.swift in Sources */,
 				A2858BC128804583007BB921 /* ProductDetailViewModel.swift in Sources */,
+				A2636A0D28813D0500FF2009 /* OrderStatus.swift in Sources */,
 				A2858BC528805EFD007BB921 /* Position.swift in Sources */,
 				A2858B9B287FEE07007BB921 /* MainTabBarView.swift in Sources */,
 				A2E967E3288103C5002B1C67 /* CurrentUser.swift in Sources */,

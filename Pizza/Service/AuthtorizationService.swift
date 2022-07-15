@@ -25,7 +25,7 @@ class AuthtorizationService {
             result, error in
             if let result = result {
                 let currentUser = CurrentUser(id: result.user.uid, name: "", phoneNumber: 0, address: "")
-                DatabaseService.shared.createUser(user: currentUser) { resultDB in
+                DatabaseService.shared.setProfile(user: currentUser) { resultDB in
                     switch resultDB {
                     case .success(_):
                         completion(.success(result.user))
