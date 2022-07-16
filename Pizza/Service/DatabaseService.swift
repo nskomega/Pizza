@@ -72,4 +72,43 @@ class DatabaseService {
             completion(.success(positions))
         }
     }
+
+    func getOrders(by userID: String?, completion: @escaping (Result<[Order], Error>) -> ()) {
+        self.orderReference.getDocuments { qsnapshot, error in
+            if let qsnapshot = qsnapshot {
+                var orders = [Order]()
+                for doc in qsnapshot.documents {
+                    if let userID = userID {
+                        if let order = Order(doc: doc), order.userID == userID {
+                            orders.append(order)
+                        }
+                    } else { //Admin
+                        if let order = Order(doc: doc) {
+                            orders.append(order)
+                        }
+                    }
+                }
+                completion(.success(orders))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func getPositions(by orderID: String, completion: @escaping (Result<[Position], Error>) -> ()) {
+        let positionsReference = orderReference.document(orderID).collection("positions")
+        positionsReference.getDocuments { qSnap, error in
+            if let querySnaphot = qSnap {
+                var positions = [Position]()
+                for doc in querySnaphot.documents {
+                    if let position = Position(doc: doc) {
+                        positions.append(position)
+                    }
+                }
+                completion(.success(positions))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
 }

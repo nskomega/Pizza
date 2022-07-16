@@ -10,7 +10,8 @@ import Foundation
 class ProfileViewModel: ObservableObject {
 
     @Published var profile: CurrentUser
-    
+    @Published var orders: [Order] = [Order]()
+
     init(profile: CurrentUser) {
         self.profile = profile
     }
@@ -31,6 +32,29 @@ class ProfileViewModel: ObservableObject {
             switch result {
             case .success(let user):
                 self.profile = user
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    func getOrders() {
+        DatabaseService.shared.getOrders(by: AuthtorizationService.shared.currentUser!.accessibilityHint) { result in
+            switch result {
+            case .success(let orders):
+                self.orders = orders
+                for (index, order) in self.orders.enumerated() {
+                    DatabaseService.shared.getPositions(by: order.id) { result in
+                        switch result {
+
+                        case .success(let positions):
+                            self.orders[index].positions = positions
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+                print("Всего заказов: \(orders.count)")
             case .failure(let error):
                 print(error.localizedDescription)
             }
