@@ -33,9 +33,8 @@ class DatabaseService {
         }
     }
 
-    func getProfile(completion: @escaping (Result<CurrentUser, Error>) -> ()) {
-        guard let user = AuthtorizationService.shared.currentUser else { return }
-        self.usersReference.document(user.uid).getDocument { dogSnapshot, error in
+    func getProfile(by userId: String? = nil, completion: @escaping (Result<CurrentUser, Error>) -> ()) {
+        self.usersReference.document(userId != nil ? userId! : AuthtorizationService.shared.currentUser!.uid).getDocument { dogSnapshot, error in
             guard let snapshot = dogSnapshot else { return }
             guard let data = snapshot.data() else { return }
             guard let userName = data["name"] as? String else { return }

@@ -18,8 +18,12 @@ struct PizzaApp: App {
     var body: some Scene {
         WindowGroup {
             if let user = AuthtorizationService.shared.currentUser {
-                let viewModel = MainTabBarViewModel(user: user)
-                MainTabBarView(viewModel: viewModel)
+                if user.uid == "BnQ2vLTEIkasBu08p1U3EHtaCAU2" {
+                    AdminOrdersScreen()
+                } else {
+                    let viewModel = MainTabBarViewModel(user: user)
+                    MainTabBarView(viewModel: viewModel)
+                }
             } else {
                 AuthorizationScreen()
             }
