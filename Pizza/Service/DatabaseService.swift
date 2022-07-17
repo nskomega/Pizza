@@ -21,6 +21,10 @@ class DatabaseService {
         return db.collection("orders")
     }
 
+    private var productsReference: CollectionReference {
+        return db.collection("products")
+    }
+
     private init() { }
 
     func setProfile(user: CurrentUser, completion: @escaping (Result<CurrentUser, Error>) -> ()) {
@@ -106,6 +110,24 @@ class DatabaseService {
                 }
                 completion(.success(positions))
             } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func setProduct(product: Product, image: Data, completion: @escaping (Result<Product, Error>) -> ()) {
+        StorageService.shared.upload(id: product.id, image: image) { result in
+            switch result {
+            case .success(let sizeInfo):
+                print(sizeInfo)
+                self.productsReference.document(product.id).setData(product.representation) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(product))
+                    }
+                }
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
