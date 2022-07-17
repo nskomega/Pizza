@@ -48,4 +48,8 @@ class AuthtorizationService {
             }
         }
     }
+
+    func signOut() {
+        try! auth.signOut()
+    }
 }

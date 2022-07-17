@@ -13,23 +13,56 @@ struct AdminOrdersScreen: View {
     @State var isOrderViewShow = false
 
     var body: some View {
-        List {
-            ForEach(viewModel.orders, id: \.id) { order in
-                OrderCell(order: order)
-                    .onTapGesture {
-                        self.viewModel.currentOrder = order
-                        self.isOrderViewShow.toggle()
-                    }
-            }
+        VStack {
+            Spacer()
+            HStack {
+                Button {
+                    AuthtorizationService.shared.signOut()
+                    self.isOrderViewShow.toggle()
+                } label: {
+                    Text("Выход")
+                        .foregroundColor(.white)
+                        .background(Color.red)
+                }
+                Spacer()
+                Button {
+                    print("Добавить товар")
+                } label: {
+                    Text("Добавить товар")
+                        .foregroundColor(.white)
+                        .background(Color.green)
+                }
 
-        }.listStyle(.plain)
-            .onAppear {
-                viewModel.getOrders()
+                Spacer()
+                Button {
+                    self.viewModel.getOrders()
+                } label: {
+                    Text("Обновить")
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                }
+
             }
-            .sheet(isPresented: $isOrderViewShow) {
-                let orderViewModel = AdminDetailOrderViewModel(order: viewModel.currentOrder)
-                AdminDetailOrderScreen(viewModel: orderViewModel)
-            }
+            List {
+                ForEach(viewModel.orders, id: \.id) { order in
+                    OrderCell(order: order)
+                        .onTapGesture {
+                            self.viewModel.currentOrder = order
+                            self.isOrderViewShow.toggle()
+                        }
+                }
+
+            }.listStyle(.plain)
+                .onAppear {
+                    viewModel.getOrders()
+                }
+                .sheet(isPresented: $isOrderViewShow) {
+                    let orderViewModel = AdminDetailOrderViewModel(order: viewModel.currentOrder)
+                    AdminDetailOrderScreen(viewModel: orderViewModel)
+                }
+        }.fullScreenCover(isPresented: $isOrderViewShow) {
+            AuthorizationScreen()
+        }
     }
 }
 

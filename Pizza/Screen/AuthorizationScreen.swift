@@ -131,9 +131,13 @@ struct AuthorizationScreen: View {
             )
             .animation(Animation.easeInOut(duration: 0.4), value: isAuthorization)
             .fullScreenCover(isPresented: $isTabBarViewShow) {
-                if let user = AuthtorizationService.shared.currentUser {
-                    let mainTabBarViewModel = MainTabBarViewModel(user: user)
-                    MainTabBarView(viewModel: mainTabBarViewModel)
+                if AuthtorizationService.shared.currentUser?.uid == "BnQ2vLTEIkasBu08p1U3EHtaCAU2" {
+                    AdminOrdersScreen()
+                } else {
+                    if let user = AuthtorizationService.shared.currentUser {
+                        let mainTabBarViewModel = MainTabBarViewModel(user: user)
+                        MainTabBarView(viewModel: mainTabBarViewModel)
+                    }
                 }
             }
     }
