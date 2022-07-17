@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
 class ProductDateilViewModel: ObservableObject {
 
     @Published var product: Product
     @Published var sizes = ["Маленькая", "Среднаяя", "Большая"]
     @Published var count = 0
+    @Published var image = UIImage(named: "pizza")
 
     init(product: Product) {
         self.product = product
@@ -26,6 +28,19 @@ class ProductDateilViewModel: ObservableObject {
         case "Большая":
             return Int(Double(product.price) * 1.5)
         default: return 0
+        }
+    }
+
+    func getImage() {
+        StorageService.shared.downloadProductImage(id: product.id) { result in
+            switch result {
+            case .success(let data):
+                if let image = UIImage(data: data) {
+                    self.image = image
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

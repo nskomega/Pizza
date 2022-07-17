@@ -18,7 +18,7 @@ struct ProductDetailView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Image("pizza")
+                Image(uiImage: self.viewModel.image!)
                     .resizable()
                     .frame(maxWidth: .infinity, maxHeight: 360)
                 HStack {
@@ -58,6 +58,9 @@ struct ProductDetailView: View {
                     .foregroundColor(.black)
                     .cornerRadius(30)
                     .shadow(radius: 5)
+            }
+            .onAppear {
+                self.viewModel.getImage()
             }
             Spacer()
         }.ignoresSafeArea()

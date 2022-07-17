@@ -32,4 +32,16 @@ class StorageService {
             comletion(.success("Размер полученного изображения: \(metadata.size)"))
         }
     }
+
+    func downloadProductImage(id: String, comletion: @escaping (Result<Data, Error>) -> ()) {
+        self.productReference.child(id).getData(maxSize: 2 * 1024 * 1024) { data, error in
+            guard let data = data else {
+                if let error = error {
+                    comletion(.failure(error))
+                }
+                return
+            }
+            comletion(.success(data))
+        }
+    }
 }
